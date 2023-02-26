@@ -121,6 +121,37 @@ class AdminController extends Controller
             ));
     }
 
+    //deleting a student or staff from the database
+    public function getuser(Request $request, $id1, $id2){
+        $id = $id1.'/'.$id2;
+        $student = Student::where('reg_no', $id)->count();
+        
+        if ($student == 0) {
+            $personnel_email = Personnel::where('work_id', $id)->value('email');
+            $user_id = User::where('email', $personnel_email)->value('id');
+
+            $query1 = Personnel::where('work_id', $id)->delete();
+            $query2 = User::where('id', $user_id)->delete();
+            if ($query1 && $query2) {
+                return redirect('/users')->with('message','Personnel deleted succsessfully !');
+            }else{
+                return redirect('/users')->with('message','Could not delete personnel, try again later !');
+            }
+
+        }else{
+            $student_email = Student::where('reg_no', $id)->value('email');
+            $user_id = User::where('email', $student_email)->value('id');
+
+            $query3 = Student::where('reg_no', $id)->delete();
+            $query4 = User::where('id', $user_id)->delete();
+            if ($query3 && $query4) {
+                return redirect('/users')->with('message','Student deleted succsessfully !');
+            }else{
+                return redirect('/users')->with('message','Could not delete student, try again later !');
+            }
+        }
+    }
+
     //admitting sos that is confirmed to  be true
     public function admitsos(Request $request){
         $id = $request->input('sos_id');
@@ -203,5 +234,53 @@ class AdminController extends Controller
     //returning the map view
     public function mapview(){
         return view('admin.mapview');
+    }
+
+    //updating student details
+    public function updatestudent(Request $request){
+        $reg_no = $request->input('reg_no');
+
+        $user_email = Student::where('reg_no', $reg_no)->value('email');
+        $user_id = User::where('email', $user_email)->value('id');
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $tel = $request->input('telephone');
+
+        $query1 = Student::where('reg_no', $reg_no)->update(['name' => $name, 'email' => $email, 'telephone' => $tel]);
+        if ($query1) {
+            $query2 = User::where('id', $user_id)->update(['name' => $name, 'email' => $email]);
+            if ($query2) {
+                return redirect('/users')->with('message','Student updated successfully !');
+            }else{
+                return redirect('/users')->with('message','Could not update student, try again later !');
+            }
+        }else{
+            return redirect('/users')->with('message','Could not update student, try again later !');
+        }
+    }
+
+    //updating personnel details
+    public function updatestaff(Request $request){
+        $work_id = $request->input('work_id');
+
+        $user_email = Personnel::where('work_id', $work_id)->value('email');
+        $user_id = User::where('email', $user_email)->value('id');
+
+        $name = $request->input('name_p');
+        $email = $request->input('email_p');
+        $tel = $request->input('telephone_p');
+
+        $query1 = Personnel::where('work_id', $work_id)->update(['name' => $name, 'email' => $email, 'telephone' => $tel]);
+        if ($query1) {
+            $query2 = User::where('id', $user_id)->update(['name' => $name, 'email' => $email]);
+            if ($query2) {
+                return redirect('/users')->with('message','Personnel updated successfully !');
+            }else{
+                return redirect('/users')->with('message','Could not update personnel, try again later !');
+            }
+        }else{
+            return redirect('/users')->with('message','Could not update personnel, try again later !');
+        }
     }
 }

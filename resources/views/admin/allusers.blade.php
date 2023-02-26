@@ -34,8 +34,8 @@
                           <td>{{$student -> program}}</td>
                           <td>
                             
-                            <button type="button" id="sos-id" data-bs-toggle="modal" data-bs-target="#admit-sos-modal" data-item-id="{{$student->reg_no}}">Update</button>
-                            <button type="button"><a href="{{url('/dismisssos/'. $student -> reg_no)}}">Delete</a></button>
+                            <button type="button" id="reg-no" data-bs-toggle="modal" data-bs-target="#update-student-modal" data-item-id="{{$student->reg_no}}" data-item-name="{{$student->name}}" data-item-email="{{$student->email}}" data-item-tel="0{{$student->telephone}}">Update</button>
+                            <button type="button"><a href="{{url('/getuser/'. $student -> reg_no)}}">Delete</a></button>
 
                           </td>
                       </tr>
@@ -86,8 +86,12 @@
                               <td>{{$rate}}</td>
                             @endif
                           <td>
-                            <button type="button" id="sos-id" data-bs-toggle="modal" data-bs-target="#admit-sos-modal" data-item-id="{{$staff->work_id}}">Update</button>
-                            <button type="button"><a href="{{url('/dismisssos/'. $staff->work_id)}}">Delete</a></button>
+                            <button type="button" id="work-id" data-bs-toggle="modal" data-bs-target="#update-personnel-modal" data-item-id="{{$staff->work_id}}" data-item-name="{{$staff->name}}" data-item-email="{{$staff->email}}" data-item-tel="0{{$staff->telephone}}">
+                              Update
+                            </button>
+                            <button type="button">
+                              <a href="{{url('/getuser/'. $staff->work_id)}}">Delete</a>
+                            </button>
                           </td>
                       </tr>
                     @endforeach
@@ -103,63 +107,42 @@
       </div>
   <!--START MODAL-->
     
-    <!-- Modal HTML Markup for Admitting an SOS -->
-      <div  class="modal fade" id="admit-sos-modal"  role="dialog" aria-labelledby="admit-sos-modal" aria-hidden="true">
+    <!-- Modal HTML Markup for editing and updating student details -->
+      <div  class="modal fade" id="update-student-modal"  role="dialog" aria-labelledby="update-student-modal" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header bg-primary">
-                    <h1 class="modal-title">SOS Details</h1>
+                    <h1 class="modal-title">Student Details</h1>
                     <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
 
-                      <form id="admit-sos-form" action="{{ route('admitsos') }}" method="post">
+                      <form id="update-student-form" action="{{ route('updatestudent') }}" method="post">
                        @csrf
-                        <div class="pl-lg-6">
-                          <div class="col-lg-5">
+                        <div class="pl-lg-12">
+                          <div class="col-lg-8">
                             <div class="form-group">
-                              <input name="sos_id" type="hidden" id="sos_id" class="form-control form-control-alternative">
+                              <label class="form-control-label"><h4>Current Student Details</h4> </label>
+                              <input name="reg_no" type="hidden" id="reg_no" class="form-control form-control-alternative">
                             </div>
                           </div> 
                           
                           <div class="col-lg-5">
                             <div class="form-group">
-                              <label class="form-control-label">Description: </label>
-                              <input name="description" type="text" id="description" class="form-control form-control-alternative" placeholder="briefly describe the situation" required>
+                              <label class="form-control-label">Name: </label>
+                              <input name="name" type="text" id="name" class="form-control form-control-alternative"   required>
                             </div>
                           </div>
                           <div class="col-lg-5">
                             <div class="form-group">
-                              <fieldset>
-                                Status:
-                                <select name="status">
-                                  <option value="Active">Active</option>
-                                  <option value="Resolved">Resolved</option>
-                                  <option value="Dismissed">Dismissed</option>
-                                </select>
-                              </fieldset>
+                              <label class="form-control-label">Email: </label>
+                              <input name="email" type="email" id="email" class="form-control form-control-alternative"  required>
                             </div>
                           </div>
                           <div class="col-lg-5">
-                            @php
-                             $personnel = $staffs->count();
-                            @endphp
                             <div class="form-group">
-                              <fieldset>
-                                Assign Personnel:
-                                <select name="personnel">
-                                  
-                                  @if($personnel > 0)
-                                  <option value="" disabled selected hidden>Select Personnel</option>
-                                  @foreach ($staffs as $staff)
-                                  <option value="{{$staff->work_id}}">{{$staff->name}}</option>
-                                  @endforeach
-                                  @endif
-                                  @if($personnel == 0)
-                                  <option value="" disabled selected hidden>All Personnel are engaged at the moment!</option>
-                                  @endif
-                                </select>
-                              </fieldset>
+                              <label class="form-control-label">Telephone: </label>
+                              <input name="telephone" type="text" id="telephone" class="form-control form-control-alternative" required>
                             </div>
                           </div>
                            
@@ -179,6 +162,67 @@
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    
+    <!--END MODAL-->
+
+    <!--START MODAL-->
+    
+    <!-- Modal HTML Markup for editing and updating personnel details -->
+      <div  class="modal fade" id="update-personnel-modal"  role="dialog" aria-labelledby="update-personnel-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <h1 class="modal-title">Personnel Details</h1>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+
+                  <form id="update-personnel-form" action="{{ route('updatestaff') }}" method="post">
+                   @csrf
+                    <div class="pl-lg-12">
+                      <div class="col-lg-8">
+                        <div class="form-group">
+                          <label class="form-control-label"><h4>Current Personnel Details</h4> </label>
+                          <input name="work_id" type="text" id="work_id" class="form-control form-control-alternative">
+                        </div>
+                      </div> 
+                      
+                      <div class="col-lg-5">
+                        <div class="form-group">
+                          <label class="form-control-label">Name: </label>
+                          <input name="name_p" type="text" id="name_p" class="form-control form-control-alternative"   required>
+                        </div>
+                      </div>
+                      <div class="col-lg-5">
+                        <div class="form-group">
+                          <label class="form-control-label">Email: </label>
+                          <input name="email_p" type="email" id="email_p" class="form-control form-control-alternative"  required>
+                        </div>
+                      </div>
+                      <div class="col-lg-5">
+                        <div class="form-group">
+                          <label class="form-control-label">Telephone: </label>
+                          <input name="telephone_p" type="text" id="telephone_p" class="form-control form-control-alternative" required>
+                        </div>
+                      </div>
+                       
+                    </div>
+                  <!-- Submit button -->
+                    <div id="results"></div>
+
+                    <div class="pl-lg-0 pr-0 text-center">
+                      <button class="btn btn-success btn-sm pl-lg-2 pt-2 pb-2 pr-2"
+                        id="submit" style="color:white">
+                        Submit
+                      </button>
+                      <img style="visibility: hidden" id="loader" src="{{ asset('argon') }}/img/brand/ajax-loader.gif" alt="working.." />
+                    </div>
+                  </form>
+                  <div style="visibility: hidden" id="error">&nbsp;</div>
+              </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     
     <!--END MODAL-->

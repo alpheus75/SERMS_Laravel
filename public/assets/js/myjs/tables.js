@@ -112,6 +112,62 @@ $(document).ready(function(){
   
 })
 
+//updating student details modal script
+$.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+$(document).ready(function(){
+  $(document).on('click', "#reg-no", function(){
+    var id = $(this).attr('data-item-id');
+    var name = $(this).attr('data-item-name');
+    var email = $(this).attr('data-item-email');
+    var tel = $(this).attr('data-item-tel');
+    console.log(id);
+    $("#reg_no").val(id);
+    $("#name").val(name);
+    $("#email").val(email);
+    $("#telephone").val(tel);
+  $('#update-student-modal').on('hide.bs.modal', function(){
+    $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked')
+    $("#update-student-form").trigger("reset");
+  })
+    // do something with the id here
+  })
+
+  
+})
+
+//updating personnel details modal script
+$.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+$(document).ready(function(){
+  $(document).on('click', "#work-id", function(){
+    var id = $(this).attr('data-item-id');
+    var name = $(this).attr('data-item-name');
+    var email = $(this).attr('data-item-email');
+    var tel = $(this).attr('data-item-tel');
+    console.log(id);
+    $("#work_id").val(id);
+    $("#name_p").val(name);
+    $("#email_p").val(email);
+    $("#telephone_p").val(tel);
+  $('#update-personnel-modal').on('hide.bs.modal', function(){
+    $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked')
+    $("#update-personnel-form").trigger("reset");
+  })
+    // do something with the id here
+  })
+
+  
+})
+
 //rating an Incident modal script
 $.ajaxSetup({
     headers: {

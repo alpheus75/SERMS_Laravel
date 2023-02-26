@@ -66,6 +66,12 @@ Route::middleware(['auth', 'user-role:0'])->group( function() {
     Route::post('/getsos/{id}', [App\Http\Controllers\AdminController::class, 'getsos'])->name('getsos');
     //admitting an sos after confirmation
     Route::post('/admitsos', [App\Http\Controllers\AdminController::class, 'admitsos'])->name('admitsos');
+    //updating student details
+    Route::post('/updatestudent', [App\Http\Controllers\AdminController::class, 'updatestudent'])->name('updatestudent');
+    //updating personnel details
+    Route::post('/updatestaff', [App\Http\Controllers\AdminController::class, 'updatestaff'])->name('updatestaff');
+    //deleting a studen or personnel from the database
+    Route::get('/getuser/{id1}/{id2}', [App\Http\Controllers\AdminController::class, 'getuser'])->name('getuser');
     //dismissing an sos after confirmation
     Route::get('/dismisssos/{id}', [App\Http\Controllers\AdminController::class, 'dismisssos'])->name('dismisssos');
     //returning the map view blade
