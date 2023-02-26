@@ -99,7 +99,7 @@ class StudentController extends Controller
 
     //taking IP address GPS coordinates and storing them
     public function sosview(){
-        $ip = '154.159.237.99'; //For static IP address get
+        $ip = '49.35.41.195'; //For static IP address get
         //$ip = request()->ip(); //Dynamic IP address get
         $data = \Location::get($ip);
         $user = auth()->user();

@@ -7,7 +7,7 @@
           <div class="card z-index-2 h-100 bg-gradient-primary">
             <div class="card-header pb-0 pt-3 bg-transparent">
 
-              <h6 class="text-capitalize">Reported SOS</h6>
+              <h6 class="text-capitalize">All Students</h6>
               
             </div>
             <div class="card-body p-3 bg-primary">
@@ -51,7 +51,7 @@
         
           <div class="card z-index-2 h-100 bg-gradient-primary">
             <div class="card-header pb-0 pt-3 bg-transparent">
-              <h6 class="text-capitalize">Incidents overview</h6>
+              <h6 class="text-capitalize">All Personnel</h6>
               
             </div>
             <div class="card-body p-3 bg-secondary">
