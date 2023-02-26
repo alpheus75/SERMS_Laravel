@@ -1,3 +1,9 @@
+The Student Emergency Response Management System is a system that help to manage the emergency requests by college and university students. It is a case study of Kenya where students in the institutions of higher learning have been facing various security threats.
+This is an improvement of that system in my first repo (https://github.com/alpheus75/SERMS) where functionalities such as notification to the security admin when a student sends an SOS and admin can perform functions to the SOS such as admitting it, dismissing it and assigning a personnel have been incorporated.
+The challenge of real time gps coordinates tracking and first code-red emergencies can be sent by the student. I look foward to solving that in a mobile application in the coming days, watch out for the next repo.
+To use the source code, the database schema is found in the 'serms.sql' file. The passowrd for all the users is "12345678"
+All reviews, comments, compliments, critique and suggestions are welcome.
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
